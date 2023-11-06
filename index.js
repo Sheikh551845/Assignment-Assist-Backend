@@ -45,7 +45,32 @@ async function run() {
   
       });
   
-    
+      app.post("/MyTakenAssignment", async (req, res)=> 
+      {
+          const Product= req.body;
+          const result= await TakenAssignment.insertOne(Product);
+          res.send(result);
+          console.log(Product);
+  
+      }
+      
+      );
+  
+      app.get("/MyTakenAssignment", async(req,res)=>
+      {
+        const cursor = TakenAssignment.find();
+        const result=await cursor.toArray();
+        res.send(result);
+      });
+  
+      app.get("/AllAssignment", async(req,res)=>
+      {
+        const cursor = AllAssignment.find();
+        const result=await cursor.toArray();
+        res.send(result);
+      });
+  
+      
   
   
   
