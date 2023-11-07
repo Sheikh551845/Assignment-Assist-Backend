@@ -35,22 +35,29 @@ async function run() {
       const AssignmentAssistDatabase=client.db("AssignmentAssistDatabase");
       const AllAssignment=AssignmentAssistDatabase.collection("AllAssignment");
       const TakenAssignment=AssignmentAssistDatabase.collection("TakenAssignment");
-  
+      const SubmittedAssignment=AssignmentAssistDatabase.collection("SubmittedAssignment");
   
       app.post("/AllAssignment", async (req, res)=> 
       {
-          const Product= req.body;
-          const result= await AllAssignment.insertOne(Product);
+          const Assignment= req.body;
+          const result= await AllAssignment.insertOne(Assignment);
+          res.send(result);
+  
+      });
+      app.post("/AllSubmittedAssignment", async (req, res)=> 
+      {
+          const Assignment= req.body;
+          const result= await SubmittedAssignment.insertOne(Assignment);
           res.send(result);
   
       });
   
       app.post("/MyTakenAssignment", async (req, res)=> 
       {
-          const Product= req.body;
-          const result= await TakenAssignment.insertOne(Product);
+          const Assignment= req.body;
+          const result= await TakenAssignment.insertOne(Assignment);
           res.send(result);
-          console.log(Product);
+          console.log(Assignment);
   
       }
       
@@ -96,7 +103,6 @@ async function run() {
     })
    
   
-      
   
   
   
