@@ -76,6 +76,14 @@ async function run() {
         const result=await cursor.toArray();
         res.send(result);
       });
+
+
+       app.get("/AllSubmittedAssignment", async(req,res)=>
+      {
+        const cursor = SubmittedAssignment.find();
+        const result=await cursor.toArray();
+        res.send(result);
+      });
   
 
        
@@ -140,12 +148,36 @@ async function run() {
               const Assignment = {
                   $set: {
                     title: updatedAssignment.title,
-                    thumbnail: updatedAssignment.thumbnail,
-                      assignmentType: updatedAssignment.assignmentType,
+                    thumbnailUrl: updatedAssignment.thumbnailUrl,
+                      difficultyLevel: updatedAssignment.difficultyLevel,
                       marks: updatedAssignment.marks,
                       imageUrl: updatedAssignment.imageUrl,
                       
                       description: updatedAssignment.description
+                  }
+              }
+              console.log(Assignment)
+  
+              const result = await AllAssignment.updateOne(filter, Assignment, options);
+              res.send(result);
+    }
+    )
+
+
+
+        app.put("/AllSubmittedAssignment/:id", async(req,res)=>
+    {
+      const id=req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+              const updatedAssignment = req.body;
+  
+              const Assignment = {
+                  $set: {
+                     givenMarks: updatedAssignment.givenMarks,
+                    feedback: updatedAssignment.feedback,
+                    markedBy: updatedAssignment.displayName,
+                    status : updatedAssignment.status,
                   }
               }
               console.log(Assignment)
