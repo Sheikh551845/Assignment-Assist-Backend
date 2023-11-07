@@ -78,13 +78,7 @@ async function run() {
       });
   
 
-       app.delete('/AllAssignment/:id', async (req, res) => {
-        const id = req.params.id;
-        const filter = { _id: new ObjectId(id) };
-        const result = await AllAssignment.deleteOne(filter);
-        res.send(result);
-        
-    })
+       
 
     app.get("/AllAssignment/:id", async(req,res)=>
     {
@@ -100,6 +94,25 @@ async function run() {
        const filter = { _id: new ObjectId(id) };
        const result = await TakenAssignment.findOne(filter);
         res.send(result);
+    })
+    
+
+     app.get("/AllSubmittedAssignment/:id", async(req,res)=>
+    {
+      const id=req.params.id;
+       const filter = { _id: new ObjectId(id) };
+       const result = await SubmittedAssignment.findOne(filter);
+        res.send(result);
+    })
+
+
+
+    app.delete('/AllAssignment/:id', async (req, res) => {
+        const id = req.params.id;
+        const filter = { _id: new ObjectId(id) };
+        const result = await AllAssignment.deleteOne(filter);
+        res.send(result);
+        
     })
    
   
