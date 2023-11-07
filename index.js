@@ -69,7 +69,72 @@ async function run() {
         const result=await cursor.toArray();
         res.send(result);
       });
+  
 
+       app.delete('/AllAssignment/:id', async (req, res) => {
+        const id = req.params.id;
+        const filter = { _id: new ObjectId(id) };
+        const result = await AllAssignment.deleteOne(filter);
+        res.send(result);
+        
+    })
+      // app.delete("/MyTakenAssignment/:id", async(req, res)=>
+      // {  
+  
+      //   console.log(req.params)
+      //   console.log(req.params.id)
+      //      const id = req.params.id;
+      //      const query={_id: new ObjectId(id)};
+      //      const result= await TakenAssignment.deleteOne(query);
+  
+      //      res.send(result);
+      //      console.log(query);
+      // });
+  
+      app.delete('/MyTakenAssignment/:id', async (req, res) => {
+        const id = req.params.id;
+        const filter = { _id: new ObjectId(id) };
+        const result = await TakenAssignment.deleteOne(filter);
+        res.send(result);
+        
+    })
+  
+  
+    app.get("/AllAssignment/:id", async(req,res)=>
+    {
+      const id=req.params.id;
+       const filter = { _id: new ObjectId(id) };
+       const result = await AllAssignment.findOne(filter);
+        res.send(result);
+    })
+  
+  
+  
+  
+    app.put("/AllAssignment/:id", async(req,res)=>
+    {
+      const id=req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+              const updatedAssignment = req.body;
+  
+              const product = {
+                  $set: {
+                    title: updatedAssignment.title,
+                    thumbnail: updatedAssignment.thumbnail,
+                      assignmentType: updatedAssignment.assignmentType,
+                      marks: updatedAssignment.marks,
+                      imageUrl: updatedAssignment.imageUrl,
+                      
+                      description: updatedAssignment.description
+                  }
+              }
+              console.log(product)
+  
+              const result = await AllAssignment.updateOne(filter, product, options);
+              res.send(result);
+    }
+    )
   
   
   
