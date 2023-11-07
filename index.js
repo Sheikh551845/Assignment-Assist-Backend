@@ -103,6 +103,44 @@ async function run() {
     })
    
   
+      app.delete('/MyTakenAssignment/:id', async (req, res) => {
+        const id = req.params.id;
+        const filter = { _id: new ObjectId(id) };
+        const result = await TakenAssignment.deleteOne(filter);
+        res.send(result);
+        
+    })
+  
+  
+   
+  
+  
+  
+  
+    app.put("/AllAssignment/:id", async(req,res)=>
+    {
+      const id=req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+              const updatedAssignment = req.body;
+  
+              const Assignment = {
+                  $set: {
+                    title: updatedAssignment.title,
+                    thumbnail: updatedAssignment.thumbnail,
+                      assignmentType: updatedAssignment.assignmentType,
+                      marks: updatedAssignment.marks,
+                      imageUrl: updatedAssignment.imageUrl,
+                      
+                      description: updatedAssignment.description
+                  }
+              }
+              console.log(Assignment)
+  
+              const result = await AllAssignment.updateOne(filter, Assignment, options);
+              res.send(result);
+    }
+    )
   
   
   
